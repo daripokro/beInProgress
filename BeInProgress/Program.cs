@@ -2,10 +2,11 @@ using System;
 using BeInProgress.Model;
 using Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>( options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection") ) );
@@ -27,11 +28,15 @@ builder.Services.AddAuthentication(options =>
     
     {
         ValidateIssuer = true,
-        ValidateAudience = true
+        ValidIssuer = builder.Configuration.GetConnectionString("Jwt:Issuer"),
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration.GetConnectionString("Jwt:Audience"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     
     };
  });
 
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 

@@ -6,9 +6,6 @@ namespace Model
 {
 	public class LoginUser
 	{
-		public LoginUser()
-		{
-		}
 		[ Required( ErrorMessage = "Username is required" ) ]
 		public string UserName { get; set; }
 

@@ -1,10 +1,11 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+*/
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Auth;
-
 
 namespace BeInProgress.Model
 {
@@ -16,6 +17,7 @@ namespace BeInProgress.Model
         }
 
         public DbSet  <BookItem> BookItems { get; set; }
+        
         protected override void OnModelCreating( ModelBuilder builder )
         {
             builder.Entity<BookItem>(entity =>
@@ -39,6 +41,7 @@ namespace BeInProgress.Model
                .IsRequired()
                .HasMaxLength(1);
            });
+
             base.OnModelCreating( builder );
         }
     }
